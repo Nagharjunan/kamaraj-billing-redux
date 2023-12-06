@@ -1,0 +1,17 @@
+.form-group {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+.form-group > * {
+  margin: 0.5rem !important;
+}
+.form-input > * {
+  width: 100%;
+}
+
+@media only screen and (max-width: 991px) {
+  /*Tablets [601px -> 1200px]*/
+  .form-group {
+    grid-template-columns: 100%;
+  }
+}
