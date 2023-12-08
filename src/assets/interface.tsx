@@ -25,3 +25,12 @@ export interface CustomerDetails {
   state: string;
   stateCode: string;
 }
+
+export interface userDetails {
+  isLoggedIn: boolean;
+  username: string;
+  id: string;
+  role: string;
+  email: string;
+  accessToken: string;
+}
