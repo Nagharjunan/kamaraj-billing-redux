@@ -30,6 +30,7 @@ function LoginComponent() {
   });
 
   async function onUserSubmit() {
+    dispatch(setLoading());
     const authData: userDetails = await loginUser(userName, password);
     try {
       dispatch(setAuthData(authData));
