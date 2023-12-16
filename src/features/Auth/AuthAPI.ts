@@ -1,8 +1,7 @@
-import axios from "axios";
-import { CONFIG as url_config } from "../../assets/config";
+import { httpClient, CONFIG as url_config } from "../../assets/config";
 
 export const loginUser = async (username: string, password: string) => {
-  const res = await axios
+  const res = await httpClient
     .post(url_config.SIGN_IN, {
       email: username,
       password,

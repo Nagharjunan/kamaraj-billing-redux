@@ -6,7 +6,7 @@ import {
 
 export const getAllProduct = async (authToken: string) => {
   setAuthHeader(authToken);
-  const res = httpClient
+  const res = await httpClient
     .get(url_config.GET_PRODUCTS)
     .then((response) => {
       console.log(response);
