@@ -23,11 +23,15 @@ export const productSlice = createSlice({
     setLoading: (state) => {
       state.status = "loading";
     },
+    closeLoading: (state) => {
+      state.status = "idle";
+    },
   },
   extraReducers: (builder) => {},
 });
 
-export const { getAllProducts, setLoading } = productSlice.actions;
+export const { getAllProducts, setLoading, closeLoading } =
+  productSlice.actions;
 
 export const productState = (state: RootState) => state.product;
 

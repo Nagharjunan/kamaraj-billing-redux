@@ -13,6 +13,7 @@ import {
   productState,
   getAllProducts,
   setLoading,
+  closeLoading,
 } from "../../features/product/productSlice";
 import { getAllProduct } from "../../features/product/productAPI";
 
@@ -34,10 +35,11 @@ function ProductTableComponent(props: { method: string; submitProduct: any }) {
   async function fetchData() {
     if (_productState.value.length === 0) {
       dispatch(setLoading());
-      const productList = await getAllProduct();
+      const productList = await getAllProduct(_authState.value.accessToken);
       try {
         dispatch(getAllProducts(productList));
       } catch (error) {
+        dispatch(closeLoading());
         window.alert("API Failed");
       }
     }
