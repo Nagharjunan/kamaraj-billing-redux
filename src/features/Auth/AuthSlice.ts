@@ -5,7 +5,6 @@ import { userDetails } from "../../assets/interface";
 
 export interface AuthState {
   value: userDetails;
-  status: "idle" | "loading" | "failed";
 }
 
 const initialState: AuthState = {
@@ -17,7 +16,6 @@ const initialState: AuthState = {
     email: "",
     accessToken: "",
   },
-  status: "idle",
 };
 
 export const loginSlice = createSlice({
@@ -27,7 +25,6 @@ export const loginSlice = createSlice({
     setAuthData: (state, action) => {
       state.value = { ...action.payload };
       state.value.isLoggedIn = true;
-      state.status = "idle";
     },
   },
   extraReducers: (builder) => {},

@@ -9,6 +9,7 @@ import { setAuthData, userData } from "../../features/Auth/AuthSlice";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../features/Auth/AuthAPI";
+import { closeLoading, setLoading } from "../../features/Loader/loaderSlice";
 
 function LoginComponent() {
   const [userName, setUserName] = useState("");
@@ -26,12 +27,14 @@ function LoginComponent() {
   });
 
   async function onUserSubmit() {
+    dispatch(setLoading());
     const authData = await loginUser(userName, password);
     if (authData.accessToken) {
       dispatch(setAuthData(authData));
-      console.log(authData);
+      dispatch(closeLoading());
     } else {
       setErrorMessage(authData.response.data.message);
+      dispatch(closeLoading());
     }
   }
 

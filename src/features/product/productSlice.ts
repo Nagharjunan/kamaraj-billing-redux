@@ -4,12 +4,10 @@ import { RootState } from "../../app/store";
 
 export interface ProductState {
   value: ProductDetails[];
-  status: "idle" | "loading" | "failed";
 }
 
 const initialState: ProductState = {
   value: [],
-  status: "idle",
 };
 
 export const productSlice = createSlice({
@@ -18,20 +16,12 @@ export const productSlice = createSlice({
   reducers: {
     getAllProducts: (state, action) => {
       state.value = [...action.payload];
-      state.status = "idle";
-    },
-    setLoading: (state) => {
-      state.status = "loading";
-    },
-    closeLoading: (state) => {
-      state.status = "idle";
     },
   },
   extraReducers: (builder) => {},
 });
 
-export const { getAllProducts, setLoading, closeLoading } =
-  productSlice.actions;
+export const { getAllProducts } = productSlice.actions;
 
 export const productState = (state: RootState) => state.product;
 

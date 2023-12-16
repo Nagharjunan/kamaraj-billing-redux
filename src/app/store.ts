@@ -3,6 +3,7 @@ import counterReducer from "../features/counter/counterSlice";
 import productReducer from "../features/product/productSlice";
 import loginReducer from "../features/Auth/AuthSlice";
 import customerReducer from "../features/Customer/customerSlice";
+import loaderReducer from "../features/Loader/loaderSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     product: productReducer,
     login: loginReducer,
     customer: customerReducer,
+    loader: loaderReducer,
   },
 });
 

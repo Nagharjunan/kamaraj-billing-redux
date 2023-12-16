@@ -12,10 +12,9 @@ import { userData } from "../../features/Auth/AuthSlice";
 import {
   productState,
   getAllProducts,
-  setLoading,
-  closeLoading,
 } from "../../features/product/productSlice";
 import { getAllProduct } from "../../features/product/productAPI";
+import { closeLoading, setLoading } from "../../features/Loader/loaderSlice";
 
 function ProductTableComponent(props: { method: string; submitProduct: any }) {
   const _productState = useAppSelector(productState);
@@ -38,6 +37,7 @@ function ProductTableComponent(props: { method: string; submitProduct: any }) {
       const productList = await getAllProduct(_authState.value.accessToken);
       try {
         dispatch(getAllProducts(productList));
+        dispatch(closeLoading());
       } catch (error) {
         dispatch(closeLoading());
         window.alert("API Failed");
@@ -65,7 +65,7 @@ function ProductTableComponent(props: { method: string; submitProduct: any }) {
       if (!event.query.trim().length) {
         _filteredProducts = [..._productState.value];
       } else {
-        _filteredProducts = _productState.value.filter((product) => {
+        _filteredProducts = _productState.value.filter((product: any) => {
           return product.productName
             .toLowerCase()
             .includes(event.query.toLowerCase());

@@ -12,18 +12,15 @@ import OrderComponent from "./pages/Order/Order";
 import HomeComponent from "./pages/Home/home.component";
 import CustomerComponent from "./pages/Customer/customer.component";
 import { customerState } from "./features/Customer/customerSlice";
+import { loaderState } from "./features/Loader/loaderSlice";
 
 function App() {
-  const _userState = useAppSelector(userData);
-  const _productState = useAppSelector(productState);
-  const _customerState = useAppSelector(customerState);
+  const _loaderState = useAppSelector(loaderState);
   useEffect(() => {});
 
   return (
     <>
-      {(_productState.status === "loading" ||
-        _userState.status === "loading" ||
-        _customerState.status === "loading") && (
+      {_loaderState.status === "loading" && (
         <LoadingComponent></LoadingComponent>
       )}
       <div className="App">
