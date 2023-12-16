@@ -5,19 +5,15 @@ import { Button } from "primereact/button";
 
 import { useEffect, useState } from "react";
 import "./Login.css";
-import {
-  setAuthData,
-  setLoading,
-  userData,
-} from "../../features/Auth/AuthSlice";
+import { setAuthData, userData } from "../../features/Auth/AuthSlice";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../features/Auth/AuthAPI";
-import { userDetails } from "../../assets/interface";
 
 function LoginComponent() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const userState = useAppSelector(userData);
   const dispatch = useAppDispatch();
@@ -30,13 +26,12 @@ function LoginComponent() {
   });
 
   async function onUserSubmit() {
-    dispatch(setLoading());
-    const authData: userDetails = await loginUser(userName, password);
-    try {
+    const authData = await loginUser(userName, password);
+    if (authData.accessToken) {
       dispatch(setAuthData(authData));
       console.log(authData);
-    } catch (err) {
-      console.log(err);
+    } else {
+      setErrorMessage(authData.response.data.message);
     }
   }
 
@@ -56,7 +51,8 @@ function LoginComponent() {
           onChange={(e) => setPassword(e.target.value)}
           feedback={false}
         />
-        <div className="flex justify-content-center align-items-center pt-4">
+        <div className="flex flex-column justify-content-center align-items-center">
+          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
           <Button label="Submit" onClick={onUserSubmit} />
         </div>
       </Card>

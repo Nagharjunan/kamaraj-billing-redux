@@ -24,23 +24,16 @@ export const loginSlice = createSlice({
   name: "login",
   initialState,
   reducers: {
-    setLoading: (state) => {
-      state.status = "loading";
-    },
     setAuthData: (state, action) => {
+      state.value = { ...action.payload };
       state.value.isLoggedIn = true;
-      state.value.username = action.payload.username;
-      state.value.id = action.payload.id;
-      state.value.role = action.payload.role;
-      state.value.email = action.payload.email;
-      state.value.accessToken = action.payload.accessToken;
       state.status = "idle";
     },
   },
   extraReducers: (builder) => {},
 });
 
-export const { setLoading, setAuthData } = loginSlice.actions;
+export const { setAuthData } = loginSlice.actions;
 
 export const userData = (state: RootState) => state.login;
 
