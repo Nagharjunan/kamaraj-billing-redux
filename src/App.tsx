@@ -13,6 +13,8 @@ import HomeComponent from "./pages/Home/home.component";
 import CustomerComponent from "./pages/Customer/customer.component";
 import { customerState } from "./features/Customer/customerSlice";
 import { loaderState } from "./features/Loader/loaderSlice";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const _loaderState = useAppSelector(loaderState);
@@ -25,6 +27,19 @@ function App() {
       )}
       <div className="App">
         <Navbar></Navbar>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
+        <ToastContainer />
         <div className="routes">
           <Routes>
             <Route path="/" element={<LoginComponent></LoginComponent>}></Route>
