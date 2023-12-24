@@ -5,45 +5,14 @@ import {
 } from "primereact/autocomplete";
 import { InputText } from "primereact/inputtext";
 import { ProductDetails } from "../../assets/interface";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { userData } from "../../features/Auth/AuthSlice";
-import {
-  productState,
-  getAllProducts,
-} from "../../features/product/productSlice";
-import { getAllProduct } from "../../features/product/productAPI";
-import { closeLoading, setLoading } from "../../features/Loader/loaderSlice";
+import { useState } from "react";
+import { useAppSelector } from "../../app/hooks";
+import { productState } from "../../features/product/productSlice";
+import { Button } from "primereact/button";
 
 function ProductTableComponent(props: { method: string; submitProduct: any }) {
   const _productState = useAppSelector(productState);
-  const _authState = useAppSelector(userData);
 
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    // if (_authState.value.isLoggedIn) {
-    // } else {
-    //   navigate("/");
-    // }
-    fetchData();
-  }, []);
-
-  async function fetchData() {
-    if (_productState.value.length === 0) {
-      dispatch(setLoading());
-      const productList = await getAllProduct(_authState.value.accessToken);
-      try {
-        dispatch(getAllProducts(productList));
-        dispatch(closeLoading());
-      } catch (error) {
-        dispatch(closeLoading());
-        window.alert("API Failed");
-      }
-    }
-  }
   const [selectedProduct, setSelectedProduct] = useState<ProductDetails>({
     productName: "",
     productCode: "",
@@ -114,18 +83,19 @@ function ProductTableComponent(props: { method: string; submitProduct: any }) {
           ></InputText>
         )}
 
-        {props.method === "edit" && (
-          <AutoComplete
-            field="productName"
-            placeholder="Product Name"
-            className="form-input"
-            name="productName"
-            value={selectedProduct}
-            suggestions={filteredProducts}
-            completeMethod={search}
-            onChange={(e) => onProductSelect(e)}
-          />
-        )}
+        {props.method === "edit" ||
+          (props.method === "delete" && (
+            <AutoComplete
+              field="productName"
+              placeholder="Product Name"
+              className="form-input"
+              name="productName"
+              value={selectedProduct}
+              suggestions={filteredProducts}
+              completeMethod={search}
+              onChange={(e) => onProductSelect(e)}
+            />
+          ))}
 
         <InputText
           placeholder="Product Code"
@@ -190,9 +160,10 @@ function ProductTableComponent(props: { method: string; submitProduct: any }) {
           value={selectedProduct.CGST}
         ></InputText>
       </div>
-      <button onClick={() => props.submitProduct(selectedProduct)}>
-        CLick me
-      </button>
+      <Button
+        label="Submit"
+        onClick={() => props.submitProduct(selectedProduct)}
+      />
     </>
   );
 }
