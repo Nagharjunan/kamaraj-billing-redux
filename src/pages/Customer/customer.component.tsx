@@ -5,7 +5,9 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { userData } from "../../features/Auth/AuthSlice";
 import {
   createCustomerAPI,
+  deleteCustomerAPI,
   getAllCustomerAPI,
+  updateCustomerAPI,
 } from "../../features/Customer/customerAPI";
 import { closeLoading, setLoading } from "../../features/Loader/loaderSlice";
 import {
@@ -48,8 +50,10 @@ function CustomerComponent(props: { method: string }) {
   function submitCustomer(selectedCustomer: CustomerDetails) {
     if (props.method === "create") {
       _createCustomer(selectedCustomer);
-    } else {
+    } else if (props.method === "update") {
       _updateCustomer(selectedCustomer);
+    } else if (props.method === "delete") {
+      _deleteCustomer(selectedCustomer);
     }
     console.log(selectedCustomer);
   }
@@ -70,8 +74,34 @@ function CustomerComponent(props: { method: string }) {
     }
   }
 
-  async function _updateCustomer(selectedCustomer: CustomerDetails) {}
-  async function _deleteCustomer(selectedCustomer: CustomerDetails) {}
+  async function _updateCustomer(selectedCustomer: CustomerDetails) {
+    dispatch(setLoading());
+    const customer = await updateCustomerAPI(
+      selectedCustomer,
+      _userState.value.accessToken
+    );
+    if (isSuccess(customer)) {
+      toast.success(customer.message);
+      fetchData();
+    } else {
+      toast.error(customer.message);
+      dispatch(closeLoading());
+    }
+  }
+  async function _deleteCustomer(selectedCustomer: CustomerDetails) {
+    dispatch(setLoading());
+    const customer = await deleteCustomerAPI(
+      selectedCustomer._id ?? "",
+      _userState.value.accessToken
+    );
+    if (isSuccess(customer)) {
+      toast.success(customer.message);
+      fetchData();
+    } else {
+      toast.error(customer.message);
+      dispatch(closeLoading());
+    }
+  }
 
   return (
     <>

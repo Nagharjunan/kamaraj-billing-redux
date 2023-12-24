@@ -34,3 +34,35 @@ export const createCustomerAPI = async (
     });
   return res;
 };
+
+export const updateCustomerAPI = async (
+  customerDetails: CustomerDetails,
+  authToken: string
+) => {
+  setAuthHeader(authToken);
+  const res = await httpClient
+    .put(url_config.UPDATE_CUSTOMER, customerDetails)
+    .then((response) => {
+      return formResponseObject(response);
+    })
+    .catch((err) => {
+      return formResponseObject(err);
+    });
+  return res;
+};
+
+export const deleteCustomerAPI = async (
+  customerId: string,
+  authToken: string
+) => {
+  setAuthHeader(authToken);
+  const res = await httpClient
+    .delete(url_config.DELETE_CUSTOMER + `/${customerId}`)
+    .then((response) => {
+      return formResponseObject(response);
+    })
+    .catch((err) => {
+      return formResponseObject(err);
+    });
+  return res;
+};
