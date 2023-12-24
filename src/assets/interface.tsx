@@ -10,6 +10,7 @@ export interface ProductDetails {
   SGST: string;
   IGST: string;
   reOrderLevel?: string;
+  _id?: string;
 }
 export interface CustomerDetails {
   customerName: string;
@@ -24,6 +25,7 @@ export interface CustomerDetails {
   gstNumber: string;
   state: string;
   stateCode: string;
+  _id?: string;
 }
 
 export interface userDetails {

@@ -3,8 +3,13 @@ import axios from "axios";
 export const CONFIG = {
   SIGN_IN: "/signin",
   GET_PRODUCTS: "/getproducts",
+  CREATE_PRODUCT: "/createproduct",
+  UPDATE_PRODUCT: "/updateproduct",
+  DELETE_PRODUCT: "/deleteproduct",
   GET_CUSTOMER: "/getcustomers",
   CREATE_CUSTOMER: "/createcustomer",
+  UPDATE_CUSTOMER: "/updatecustomer",
+  DELETE_CUSTOMER: "/deletecustomer",
 };
 
 export const httpClient = axios.create({
