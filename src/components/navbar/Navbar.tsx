@@ -2,13 +2,19 @@ import { Menubar } from "primereact/menubar";
 import "./Navbar.css";
 
 import { NavLink, useNavigate } from "react-router-dom";
+import { removeAuthData, userData } from "../../features/Auth/AuthSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 function Navbar() {
   const navigate = useNavigate();
 
+  const _userState = useAppSelector(userData);
+  const dispatch = useAppDispatch();
+
   const items = [
     {
       label: "Product",
+      visible: _userState.value.isLoggedIn && _userState.value.role === "admin",
       items: [
         {
           label: "Create Product",
@@ -21,6 +27,11 @@ function Navbar() {
           command: selectedItem,
         },
         {
+          label: "Delete Product",
+          data: "delete-product",
+          command: selectedItem,
+        },
+        {
           separator: true,
         },
         {
@@ -30,6 +41,7 @@ function Navbar() {
     },
     {
       label: "Customer",
+      visible: _userState.value.isLoggedIn && _userState.value.role === "admin",
       items: [
         {
           label: "Create Customer",
@@ -42,6 +54,11 @@ function Navbar() {
           command: selectedItem,
         },
         {
+          label: "Delete Customer",
+          data: "delete-customer",
+          command: selectedItem,
+        },
+        {
           separator: true,
         },
         {
@@ -51,6 +68,7 @@ function Navbar() {
     },
     {
       label: "Order",
+      visible: _userState.value.isLoggedIn,
       items: [
         {
           label: "New",
@@ -62,10 +80,16 @@ function Navbar() {
           data: "edit-order",
           command: selectedItem,
         },
+        {
+          label: "Delete",
+          data: "delete-order",
+          command: selectedItem,
+        },
       ],
     },
     {
       label: "Users",
+      visible: _userState.value.isLoggedIn && _userState.value.role === "admin",
       items: [
         {
           label: "New",
@@ -93,6 +117,7 @@ function Navbar() {
     },
     {
       label: "Events",
+      visible: _userState.value.isLoggedIn,
       items: [
         {
           label: "Edit",
@@ -121,7 +146,15 @@ function Navbar() {
     {
       label: "Login",
       data: "login",
+      visible: !_userState.value.isLoggedIn,
       command: selectedItem,
+    },
+    {
+      label: "Logout",
+      visible: _userState.value.isLoggedIn,
+      command: () => {
+        logout();
+      },
     },
   ];
   const end = (
@@ -139,6 +172,9 @@ function Navbar() {
       <Menubar model={items} end={end}></Menubar>
     </div>
   );
+  function logout() {
+    dispatch(removeAuthData());
+    navigate("/");
+  }
 }
-
 export default Navbar;

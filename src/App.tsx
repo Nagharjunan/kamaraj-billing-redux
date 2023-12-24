@@ -56,6 +56,10 @@ function App() {
               element={<OrderComponent method="edit"></OrderComponent>}
             ></Route>
             <Route
+              path="/delete-order"
+              element={<OrderComponent method="delete"></OrderComponent>}
+            ></Route>
+            <Route
               path="/create-customer"
               element={<CustomerComponent method="create"></CustomerComponent>}
             ></Route>
@@ -64,12 +68,20 @@ function App() {
               element={<CustomerComponent method="edit"></CustomerComponent>}
             ></Route>
             <Route
+              path="/delete-customer"
+              element={<CustomerComponent method="delete"></CustomerComponent>}
+            ></Route>
+            <Route
               path="/create-product"
               element={<ProductComponent method="create"></ProductComponent>}
             ></Route>
             <Route
               path="/edit-product"
               element={<ProductComponent method="edit"></ProductComponent>}
+            ></Route>
+            <Route
+              path="/delete-product"
+              element={<ProductComponent method="delete"></ProductComponent>}
             ></Route>
             <Route
               path="/login"

@@ -26,11 +26,14 @@ export const loginSlice = createSlice({
       state.value = { ...action.payload };
       state.value.isLoggedIn = true;
     },
+    removeAuthData: (state) => {
+      state.value = { ...initialState.value };
+    },
   },
   extraReducers: (builder) => {},
 });
 
-export const { setAuthData } = loginSlice.actions;
+export const { setAuthData, removeAuthData } = loginSlice.actions;
 
 export const userData = (state: RootState) => state.login;
 
