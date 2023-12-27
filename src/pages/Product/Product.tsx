@@ -44,15 +44,17 @@ function ProductComponent(props: { method: string }) {
     }
   }
 
-  function submitProduct(selectedProduct: ProductDetails) {
-    if (props.method === "create") {
-      _createProduct(selectedProduct);
-    } else if (props.method === "update") {
-      _updateProduct(selectedProduct);
-    } else if (props.method === "delete") {
-      _deleteProduct(selectedProduct);
+  function submitProduct(selectedProduct: ProductDetails, isOrder: Boolean) {
+    if (!isOrder) {
+      if (props.method === "create") {
+        _createProduct(selectedProduct);
+      } else if (props.method === "update") {
+        _updateProduct(selectedProduct);
+      } else if (props.method === "delete") {
+        _deleteProduct(selectedProduct);
+      }
+      console.log(selectedProduct);
     }
-    console.log(selectedProduct);
   }
 
   async function _createProduct(selectedProduct: ProductDetails) {
@@ -106,6 +108,7 @@ function ProductComponent(props: { method: string }) {
         <ProductTableComponent
           method={props.method}
           submitProduct={submitProduct}
+          isOrder={false}
         ></ProductTableComponent>
       </Card>
     </>
