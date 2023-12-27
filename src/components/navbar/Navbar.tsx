@@ -4,6 +4,7 @@ import "./Navbar.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { removeAuthData, userData } from "../../features/Auth/AuthSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { resetStore } from "../../app/resetAction";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -173,6 +174,7 @@ function Navbar() {
     </div>
   );
   function logout() {
+    dispatch(resetStore());
     dispatch(removeAuthData());
     navigate("/");
   }

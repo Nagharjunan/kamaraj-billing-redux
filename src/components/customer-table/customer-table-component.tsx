@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { customerState } from "../../features/Customer/customerSlice";
 import { useNavigate } from "react-router-dom";
 import { closeLoading, setLoading } from "../../features/Loader/loaderSlice";
+import { Button } from "primereact/button";
 
 function CustomerTableComponent(props: {
   method: string;
@@ -175,9 +176,13 @@ function CustomerTableComponent(props: {
           value={selectedCustomer.customerShipAddline3}
         ></InputText>
       </div>
-      <button onClick={() => props.submitCustomer(selectedCustomer)}>
-        CLick me
-      </button>
+      <div className="flex justify-content-center">
+        <Button
+          label="Submit"
+          className="flex justify-content-center"
+          onClick={() => props.submitCustomer(selectedCustomer)}
+        />
+      </div>
     </>
   );
 }

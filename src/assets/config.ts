@@ -10,6 +10,8 @@ export const CONFIG = {
   CREATE_CUSTOMER: "/createcustomer",
   UPDATE_CUSTOMER: "/updatecustomer",
   DELETE_CUSTOMER: "/deletecustomer",
+  GET_ORDERS: "/getorders",
+  CREATE_ORDER: "/createorder",
 };
 
 export const httpClient = axios.create({

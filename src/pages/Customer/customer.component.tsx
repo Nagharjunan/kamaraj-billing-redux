@@ -21,7 +21,6 @@ import { isSuccess } from "../../assets/config";
 
 function CustomerComponent(props: { method: string }) {
   const _userState = useAppSelector(userData);
-  const _customerState = useAppSelector(customerState);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

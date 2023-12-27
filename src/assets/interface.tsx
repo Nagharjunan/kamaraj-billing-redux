@@ -11,6 +11,7 @@ export interface ProductDetails {
   IGST: string;
   reOrderLevel?: string;
   _id?: string;
+  qty?: number;
 }
 export interface CustomerDetails {
   customerName: string;
@@ -35,4 +36,24 @@ export interface userDetails {
   role: string;
   email: string;
   accessToken: string;
+  _id?: string;
+}
+
+export interface OrderDetails {
+  orderedFor: CustomerDetails;
+  orderList: ProductDetails[];
+  paymentMode: string;
+  orderDate: string;
+  orderStatus: string;
+  orderedBy: string;
+  modifiedBy: {
+    modifiedDate: String;
+    modifiedUser: String;
+  };
+  approved: {
+    isApproved: Boolean;
+    approvedBy: String;
+    approvalDate: String;
+  };
+  _id?: string;
 }
