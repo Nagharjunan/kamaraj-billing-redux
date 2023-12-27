@@ -10,7 +10,11 @@ import { useAppSelector } from "../../app/hooks";
 import { productState } from "../../features/product/productSlice";
 import { Button } from "primereact/button";
 
-function ProductTableComponent(props: { method: string; submitProduct: any }) {
+function ProductTableComponent(props: {
+  method: string;
+  submitProduct: any;
+  isOrder: boolean;
+}) {
   const _productState = useAppSelector(productState);
 
   const [selectedProduct, setSelectedProduct] = useState<ProductDetails>({
@@ -83,19 +87,27 @@ function ProductTableComponent(props: { method: string; submitProduct: any }) {
           ></InputText>
         )}
 
-        {props.method === "edit" ||
-          (props.method === "delete" && (
-            <AutoComplete
-              field="productName"
-              placeholder="Product Name"
-              className="form-input"
-              name="productName"
-              value={selectedProduct}
-              suggestions={filteredProducts}
-              completeMethod={search}
-              onChange={(e) => onProductSelect(e)}
-            />
-          ))}
+        {(props.method === "edit" || props.method === "delete") && (
+          <AutoComplete
+            field="productName"
+            placeholder="Product Name"
+            className="form-input"
+            name="productName"
+            value={selectedProduct}
+            suggestions={filteredProducts}
+            completeMethod={search}
+            onChange={(e) => onProductSelect(e)}
+          />
+        )}
+
+        {props.isOrder && (
+          <InputText
+            placeholder="Quantity"
+            onChange={onTextChange}
+            name="qty"
+            value={selectedProduct.qty ? selectedProduct.qty.toString() : ""}
+          ></InputText>
+        )}
 
         <InputText
           placeholder="Product Code"
@@ -160,10 +172,13 @@ function ProductTableComponent(props: { method: string; submitProduct: any }) {
           value={selectedProduct.CGST}
         ></InputText>
       </div>
-      <Button
-        label="Submit"
-        onClick={() => props.submitProduct(selectedProduct)}
-      />
+      <div className="flex justify-content-center">
+        <Button
+          label={props.isOrder ? "Add Product" : "Submit"}
+          className="flex justify-content-center"
+          onClick={() => props.submitProduct(selectedProduct)}
+        />
+      </div>
     </>
   );
 }
