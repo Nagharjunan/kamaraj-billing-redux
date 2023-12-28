@@ -1,15 +1,13 @@
-import { useState } from "react";
 import { CustomerDetails, ProductDetails } from "../../assets/interface";
-import { Dropdown } from "primereact/dropdown";
-import { Button } from "primereact/button";
 
 export function ReviewOrderComponent(props: {
   productCart: ProductDetails[];
   customer: CustomerDetails;
+  isOrder: boolean;
 }) {
   return (
     <>
-      <h3>Review Order</h3>
+      {props.isOrder ? <h3>Review Order</h3> : <h3>Invoice</h3>}
       <>
         <h5>Customer</h5>
         <>

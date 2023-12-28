@@ -10,14 +10,12 @@ import {
   updateCustomerAPI,
 } from "../../features/Customer/customerAPI";
 import { closeLoading, setLoading } from "../../features/Loader/loaderSlice";
-import {
-  customerState,
-  getAllCustomer,
-} from "../../features/Customer/customerSlice";
+import { getAllCustomer } from "../../features/Customer/customerSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { isSuccess } from "../../assets/config";
+import { resetStore } from "../../app/resetAction";
 
 function CustomerComponent(props: { method: string }) {
   const _userState = useAppSelector(userData);
@@ -29,9 +27,10 @@ function CustomerComponent(props: { method: string }) {
     if (_userState.value.isLoggedIn) {
       fetchData();
     } else {
+      dispatch(resetStore());
       navigate("/");
     }
-  }, []);
+  });
 
   async function fetchData() {
     dispatch(setLoading());

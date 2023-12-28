@@ -29,13 +29,14 @@ import { Button } from "primereact/button";
 import ProductOrderList from "../../components/product-order-list/product-order-list.component";
 import { ReviewOrderComponent } from "../../components/review-order/review-order-component";
 import { Dropdown } from "primereact/dropdown";
-import { createOrderAPI, getOrdersAPI } from "../../features/order/orderAPI";
-import { getAllOrder } from "../../features/order/orderSlice";
+import { createOrderAPI } from "../../features/order/orderAPI";
+import { resetStore } from "../../app/resetAction";
 
 function OrderComponent(props: { method: string }) {
   const [productCart, setProductCart] = useState<ProductDetails[]>();
   const [selectedCustomer, setSelectedCustomer] = useState<CustomerDetails>();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const _customerState = useAppSelector(customerState);
   const _productState = useAppSelector(productState);
@@ -49,10 +50,15 @@ function OrderComponent(props: { method: string }) {
   const [paymentMode, setPaymentMode] = useState<string>("cash");
 
   useEffect(() => {
-    if (!_customerState.value.length || !_productState.value.length) {
-      fetchData();
+    if (!_userState.value.id) {
+      if (!_customerState.value.length || !_productState.value.length) {
+        fetchData();
+      }
+    } else {
+      dispatch(resetStore());
+      navigate("/");
     }
-  }, [_customerState, _productState]);
+  });
 
   async function fetchData() {
     dispatch(setLoading());
@@ -163,7 +169,10 @@ function OrderComponent(props: { method: string }) {
           model={items}
           className="mb-4"
           activeIndex={activeIndex}
-          readOnly={true}
+          readOnly={false}
+          onSelect={(e: StepsSelectEvent) => {
+            showState(e.index);
+          }}
         />
         {activeIndex === 0 && (
           <CustomerTableComponent
@@ -202,6 +211,7 @@ function OrderComponent(props: { method: string }) {
             <ReviewOrderComponent
               productCart={productCart ?? []}
               customer={selectedCustomer ?? ({} as CustomerDetails)}
+              isOrder={true}
             ></ReviewOrderComponent>
             <div className="flex justify-content-between">
               <span>Mode of Payment</span>

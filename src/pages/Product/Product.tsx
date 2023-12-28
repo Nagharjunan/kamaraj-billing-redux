@@ -16,6 +16,7 @@ import {
 } from "../../features/product/productAPI";
 import { isSuccess } from "../../assets/config";
 import { toast } from "react-toastify";
+import { resetStore } from "../../app/resetAction";
 
 function ProductComponent(props: { method: string }) {
   const _authState = useAppSelector(userData);
@@ -27,9 +28,10 @@ function ProductComponent(props: { method: string }) {
     if (_authState.value.isLoggedIn) {
       fetchData();
     } else {
+      dispatch(resetStore());
       navigate("/");
     }
-  }, []);
+  });
 
   async function fetchData() {
     dispatch(setLoading());

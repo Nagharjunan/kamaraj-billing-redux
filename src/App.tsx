@@ -1,24 +1,20 @@
-import { useEffect } from "react";
 import "./App.css";
 import Navbar from "./components/navbar/Navbar";
 import { Routes, Route, Navigate } from "react-router-dom";
 import ProductComponent from "./pages/Product/Product";
 import LoginComponent from "./pages/Login/Login";
 import { useAppSelector } from "./app/hooks";
-import { userData } from "./features/Auth/AuthSlice";
-import { productState } from "./features/product/productSlice";
 import LoadingComponent from "./components/Loading/loading";
 import OrderComponent from "./pages/Order/Order";
 import HomeComponent from "./pages/Home/home.component";
 import CustomerComponent from "./pages/Customer/customer.component";
-import { customerState } from "./features/Customer/customerSlice";
 import { loaderState } from "./features/Loader/loaderSlice";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { InvoiceComponent } from "./pages/Invoice/Invoice";
 
 function App() {
   const _loaderState = useAppSelector(loaderState);
-  useEffect(() => {});
 
   return (
     <>
@@ -50,6 +46,10 @@ function App() {
             <Route
               path="/create-order"
               element={<OrderComponent method="create"></OrderComponent>}
+            ></Route>
+            <Route
+              path="/view-invoice"
+              element={<InvoiceComponent></InvoiceComponent>}
             ></Route>
             <Route
               path="/edit-order"

@@ -1,18 +1,21 @@
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { userData } from "../../features/Auth/AuthSlice";
+import { resetStore } from "../../app/resetAction";
 
 function HomeComponent() {
-  // const _authState = useAppSelector(userData);
-  // const navigate = useNavigate();
+  const _authState = useAppSelector(userData);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // if (_authState.value.isLoggedIn) {
-    // } else {
-    //   navigate("/");
-    // }
-  }, []);
+    if (_authState.value.isLoggedIn) {
+    } else {
+      dispatch(resetStore());
+      navigate("/");
+    }
+  });
 
   return (
     <div className="flex flex-column align-items-center justify-content-center h-full">
@@ -22,8 +25,8 @@ function HomeComponent() {
       <Link to="/create-order" className="p-2">
         Create Order
       </Link>
-      <Link to="/edit-order" className="p-2">
-        Edit Order
+      <Link to="/view-invoice" className="p-2">
+        View Invoice
       </Link>
       <Link to="/create-product" className="p-2">
         Create Product
