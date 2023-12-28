@@ -15,7 +15,7 @@ function HomeComponent() {
       dispatch(resetStore());
       navigate("/");
     }
-  });
+  }, []);
 
   return (
     <div className="flex flex-column align-items-center justify-content-center h-full">

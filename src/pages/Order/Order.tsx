@@ -50,7 +50,7 @@ function OrderComponent(props: { method: string }) {
   const [paymentMode, setPaymentMode] = useState<string>("cash");
 
   useEffect(() => {
-    if (!_userState.value.id) {
+    if (_userState.value.id) {
       if (!_customerState.value.length || !_productState.value.length) {
         fetchData();
       }
@@ -58,7 +58,7 @@ function OrderComponent(props: { method: string }) {
       dispatch(resetStore());
       navigate("/");
     }
-  });
+  }, []);
 
   async function fetchData() {
     dispatch(setLoading());

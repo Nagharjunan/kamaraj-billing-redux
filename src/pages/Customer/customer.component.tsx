@@ -30,7 +30,7 @@ function CustomerComponent(props: { method: string }) {
       dispatch(resetStore());
       navigate("/");
     }
-  });
+  }, []);
 
   async function fetchData() {
     dispatch(setLoading());

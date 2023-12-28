@@ -24,7 +24,7 @@ function LoginComponent() {
     if (userState.value.isLoggedIn) {
       navigate("home");
     }
-  });
+  }, []);
 
   async function onUserSubmit() {
     dispatch(setLoading());
