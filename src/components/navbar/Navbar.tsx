@@ -77,6 +77,11 @@ function Navbar() {
           command: selectedItem,
         },
         {
+          label: "View Invoice",
+          data: "view-invoice",
+          command: selectedItem,
+        },
+        {
           label: "Edit",
           data: "edit-order",
           command: selectedItem,
