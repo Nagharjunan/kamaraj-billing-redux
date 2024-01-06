@@ -12,10 +12,14 @@ export const CONFIG = {
   DELETE_CUSTOMER: "/deletecustomer",
   GET_ORDERS: "/getorders",
   CREATE_ORDER: "/createorder",
+  SEND_ORDER_EMAIL: "/sendorderpdf",
 };
 
+const localURL = "http://localhost:8080";
+const prodURL = "https://kamaraj-node-service.onrender.com";
+
 export const httpClient = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: prodURL,
 });
 
 export const setAuthHeader = (authToken: string) => {
@@ -25,17 +29,20 @@ export const setAuthHeader = (authToken: string) => {
 };
 
 export function formResponseObject(response: any) {
-  if (response.status) {
+  if (response?.name !== "AxiosError") {
     const resObj = {
-      status: response.status,
-      message: response.data.message,
-      value: response.data.value,
+      status: response?.status ?? 200,
+      message: response?.data?.message ?? "Success",
+      value: response?.data?.value ?? null,
     };
     return resObj;
   } else {
     const errorObj = {
-      status: response.response.status,
-      message: response.response.data.message,
+      status: response?.response?.status ?? 500,
+      message:
+        response?.response?.data?.message ??
+        response?.message ??
+        "Unknown error",
       value: [],
     };
     return errorObj;
