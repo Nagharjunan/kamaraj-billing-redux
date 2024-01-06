@@ -34,3 +34,20 @@ export const createOrderAPI = async (
     });
   return res;
 };
+
+export const sendOrderEmailAPI = async (orderId: string, authToken: string) => {
+  setAuthHeader(authToken);
+  const res = await httpClient
+    .get(CONFIG.SEND_ORDER_EMAIL + "/" + orderId)
+    .then((response) => {
+      console.log(response);
+      const blob = new Blob([response.data], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank");
+      return { status: 200 };
+    })
+    .catch((err) => {
+      return formResponseObject(err);
+    });
+  return res;
+};

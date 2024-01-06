@@ -1,4 +1,8 @@
-import { httpClient, CONFIG as url_config } from "../../assets/config";
+import {
+  formResponseObject,
+  httpClient,
+  CONFIG as url_config,
+} from "../../assets/config";
 
 export const loginUser = async (username: string, password: string) => {
   const res = await httpClient
@@ -8,11 +12,11 @@ export const loginUser = async (username: string, password: string) => {
     })
     .then((response) => {
       console.log(response);
-      return response.data;
+      return formResponseObject(response);
     })
     .catch((err) => {
       console.log(err);
-      return err;
+      return formResponseObject(err);
     });
   return res;
 };

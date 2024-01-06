@@ -10,6 +10,7 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../features/Auth/AuthAPI";
 import { closeLoading, setLoading } from "../../features/Loader/loaderSlice";
+import { isSuccess } from "../../assets/config";
 
 function LoginComponent() {
   const [userName, setUserName] = useState("");
@@ -20,20 +21,15 @@ function LoginComponent() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (userState.value.isLoggedIn) {
-      navigate("home");
-    }
-  }, []);
-
   async function onUserSubmit() {
     dispatch(setLoading());
     const authData = await loginUser(userName, password);
-    if (authData.accessToken) {
-      dispatch(setAuthData(authData));
+    if (isSuccess(authData)) {
+      dispatch(setAuthData(authData.value));
+      navigate("home");
       dispatch(closeLoading());
     } else {
-      setErrorMessage(authData.response.data.message);
+      setErrorMessage(authData.message);
       dispatch(closeLoading());
     }
   }

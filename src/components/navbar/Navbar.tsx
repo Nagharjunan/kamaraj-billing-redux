@@ -164,7 +164,7 @@ function Navbar() {
     },
   ];
   const end = (
-    <NavLink to="/" className="company-logo">
+    <NavLink to="/home" className="company-logo">
       K A M A R A J
     </NavLink>
   );
