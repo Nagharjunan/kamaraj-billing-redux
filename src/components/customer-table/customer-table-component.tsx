@@ -93,7 +93,7 @@ function CustomerTableComponent(props: {
           ></InputText>
         )}
 
-        {props.method === "edit" && (
+        {(props.method === "edit" || props.method === "delete") && (
           <AutoComplete
             field="customerName"
             placeholder="Customer Name"
