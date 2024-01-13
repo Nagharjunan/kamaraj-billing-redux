@@ -50,7 +50,7 @@ function ProductComponent(props: { method: string }) {
     if (!isOrder) {
       if (props.method === "create") {
         _createProduct(selectedProduct);
-      } else if (props.method === "update") {
+      } else if (props.method === "edit") {
         _updateProduct(selectedProduct);
       } else if (props.method === "delete") {
         _deleteProduct(selectedProduct);
@@ -74,10 +74,11 @@ function ProductComponent(props: { method: string }) {
     }
   }
 
-  async function _updateProduct(selectedCustomer: ProductDetails) {
+  async function _updateProduct(selectedProduct: ProductDetails) {
+    console.log(selectedProduct);
     dispatch(setLoading());
     const product = await updateProductAPI(
-      selectedCustomer,
+      selectedProduct,
       _authState.value.accessToken
     );
     if (isSuccess(product)) {
