@@ -25,7 +25,7 @@ function App() {
         <Navbar></Navbar>
         <ToastContainer
           position="top-right"
-          autoClose={5000}
+          autoClose={1000}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick
@@ -35,7 +35,6 @@ function App() {
           pauseOnHover
           theme="dark"
         />
-        <ToastContainer />
         <div className="routes">
           <Routes>
             <Route path="/" element={<LoginComponent></LoginComponent>}></Route>
