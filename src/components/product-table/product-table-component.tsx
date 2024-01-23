@@ -58,7 +58,7 @@ function ProductTableComponent(props: {
         _filteredProducts = [..._productState.value];
       } else {
         _filteredProducts = _productState.value.filter((product: any) => {
-          return product.productName
+          return product.productCode
             .toLowerCase()
             .includes(event.query.toLowerCase());
         });
@@ -178,15 +178,38 @@ function ProductTableComponent(props: {
       <div className="form-group">
         {props.method === "create" && (
           <InputText
-            placeholder="Product Name"
-            name="productName"
-            value={selectedProduct.productName}
-            className={formErrors.productName ? "p-invalid" : ""}
+            placeholder="Product Code"
+            name="productCode"
+            value={selectedProduct.productCode}
+            className={formErrors.productCode ? "p-invalid" : ""}
             onChange={onTextChange}
           ></InputText>
         )}
 
         {(props.method === "edit" || props.method === "delete") && (
+          <AutoComplete
+            field="productCode"
+            placeholder="Product Code"
+            className="form-input"
+            name="productCode"
+            value={selectedProduct}
+            suggestions={filteredProducts}
+            onKeyDown={(e) => {
+              e.code === "Backspace" && setSelectedProduct(initialFormState);
+            }}
+            completeMethod={search}
+            onChange={(e) => onProductSelect(e)}
+          />
+        )}
+        <InputText
+          placeholder="Product Name"
+          name="productName"
+          value={selectedProduct.productName}
+          className={formErrors.productName ? "p-invalid" : ""}
+          onChange={onTextChange}
+        ></InputText>
+
+        {/* {(props.method === "edit" || props.method === "delete") && (
           <AutoComplete
             field="productName"
             placeholder="Product Name"
@@ -200,7 +223,7 @@ function ProductTableComponent(props: {
             completeMethod={search}
             onChange={(e) => onProductSelect(e)}
           />
-        )}
+        )} */}
 
         {props.isOrder && (
           <InputText
@@ -211,14 +234,6 @@ function ProductTableComponent(props: {
             value={selectedProduct.qty ? selectedProduct.qty.toString() : ""}
           ></InputText>
         )}
-
-        <InputText
-          placeholder="Product Code"
-          onChange={onTextChange}
-          className={formErrors.productCode ? "p-invalid" : ""}
-          name="productCode"
-          value={selectedProduct.productCode}
-        ></InputText>
       </div>
       <div className="form-group">
         <InputText
