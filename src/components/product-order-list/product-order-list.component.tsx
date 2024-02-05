@@ -6,9 +6,13 @@ import "./product-order-list.component.css";
 
 interface ProductOrderListProps {
   products: ProductDetails[];
+  deleteProductforOrder: any;
 }
 
-const ProductOrderList: React.FC<ProductOrderListProps> = ({ products }) => {
+const ProductOrderList: React.FC<ProductOrderListProps> = ({
+  products,
+  deleteProductforOrder,
+}) => {
   return (
     <div>
       <h3>Products In Cart</h3>
@@ -31,8 +35,14 @@ const ProductOrderList: React.FC<ProductOrderListProps> = ({ products }) => {
             </div>
           </>
           <div className="flex justify-content-end pt-2">
-            <Button label="Edit" className="p-button-secondary mr-2" />
-            <Button label="Delete" className="p-button-danger ml-2" />
+            {/* <Button label="Edit" className="p-button-secondary mr-2" /> */}
+            <Button
+              label="Delete"
+              onClick={() => {
+                deleteProductforOrder(product.productCode);
+              }}
+              className="p-button-danger ml-2"
+            />
           </div>
         </Card>
       ))}

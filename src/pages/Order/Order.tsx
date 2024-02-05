@@ -95,13 +95,24 @@ function OrderComponent(props: { method: string }) {
     });
     console.log(isDuplicateProduct, selectedProduct);
     if (isDuplicateProduct?.length) {
-      toast.info("Product Already Exists, try updating the product");
+      toast.info("Product Already Exists, try deleting and add the product");
       console.log(productCart);
     } else {
       // update productCart state with selectedProduct
       setProductCart([...(productCart ?? []), selectedProduct]);
       console.log(productCart);
     }
+  }
+
+  function deleteProductforOrder(selectedProductCode: string) {
+    const indexToDelete = productCart?.findIndex(
+      (value: ProductDetails, index: number) => {
+        return value.productCode === selectedProductCode;
+      }
+    );
+    productCart?.splice(indexToDelete || 0, 1);
+    console.log(selectedProductCode, indexToDelete);
+    setProductCart([...(productCart ?? [])]);
   }
 
   function submitCustomer(selectedCustomer: any) {
@@ -188,7 +199,12 @@ function OrderComponent(props: { method: string }) {
               isOrder={true}
             ></ProductTableComponent>
             {/* if productCart isn't empty display the product name in a list */}
-            {productCart?.length && <ProductOrderList products={productCart} />}
+            {productCart?.length && (
+              <ProductOrderList
+                products={productCart}
+                deleteProductforOrder={deleteProductforOrder}
+              />
+            )}
             <div className="flex justify-content-between mt-4">
               <Button
                 label="Back"
