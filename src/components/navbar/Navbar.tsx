@@ -26,23 +26,29 @@ function Navbar() {
           label: "Edit Product",
           data: "edit-product",
           command: selectedItem,
+          visible:
+            _userState.value.isLoggedIn && _userState.value.role === "admin",
         },
         {
           label: "Delete Product",
           data: "delete-product",
           command: selectedItem,
+          visible:
+            _userState.value.isLoggedIn && _userState.value.role === "admin",
         },
         {
           separator: true,
         },
         {
           label: "Export Product List",
+          visible:
+            _userState.value.isLoggedIn && _userState.value.role === "admin",
         },
       ],
     },
     {
       label: "Customer",
-      visible: _userState.value.isLoggedIn && _userState.value.role === "admin",
+      visible: _userState.value.isLoggedIn,
       items: [
         {
           label: "Create Customer",
@@ -53,17 +59,23 @@ function Navbar() {
           label: "Edit Customer",
           data: "edit-customer",
           command: selectedItem,
+          visible:
+            _userState.value.isLoggedIn && _userState.value.role === "admin",
         },
         {
           label: "Delete Customer",
           data: "delete-customer",
           command: selectedItem,
+          visible:
+            _userState.value.isLoggedIn && _userState.value.role === "admin",
         },
         {
           separator: true,
         },
         {
           label: "Export Customer List",
+          visible:
+            _userState.value.isLoggedIn && _userState.value.role === "admin",
         },
       ],
     },
@@ -80,16 +92,22 @@ function Navbar() {
           label: "View Invoice",
           data: "view-invoice",
           command: selectedItem,
+          visible:
+            _userState.value.isLoggedIn && _userState.value.role === "admin",
         },
         {
           label: "Edit",
           data: "edit-order",
           command: selectedItem,
+          visible:
+            _userState.value.isLoggedIn && _userState.value.role === "admin",
         },
         {
           label: "Delete",
           data: "delete-order",
           command: selectedItem,
+          visible:
+            _userState.value.isLoggedIn && _userState.value.role === "admin",
         },
       ],
     },

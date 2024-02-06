@@ -164,9 +164,11 @@ function OrderComponent(props: { method: string }) {
       _userState.value.accessToken
     );
     if (isSuccess(orderResponse)) {
+      navigate("/");
       toast.success(orderResponse.message);
       dispatch(closeLoading());
     } else {
+      window.scrollTo(0, 0);
       toast.error(orderResponse.message);
       dispatch(closeLoading());
     }

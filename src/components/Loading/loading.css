@@ -24,7 +24,7 @@
   margin: 0;
   display: grid;
   z-index: 999;
-  min-height: 100vh;
+  min-height: 100%;
   place-content: center;
   background: linear-gradient(45deg, #ccc, #fff);
   position: absolute;
