@@ -164,7 +164,7 @@ function OrderComponent(props: { method: string }) {
       _userState.value.accessToken
     );
     if (isSuccess(orderResponse)) {
-      navigate("/");
+      navigate("/home");
       toast.success(orderResponse.message);
       dispatch(closeLoading());
     } else {
