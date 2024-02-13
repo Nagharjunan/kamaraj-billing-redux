@@ -19,9 +19,7 @@ export function InvoiceComponent() {
 
   useEffect(() => {
     if (_authState.value.isLoggedIn) {
-      if (_orderState.value.length === 0) {
-        fetchOrders();
-      }
+      fetchOrders();
     } else {
       navigate("/");
     }
