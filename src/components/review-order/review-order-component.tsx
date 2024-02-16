@@ -29,8 +29,18 @@ export function ReviewOrderComponent(props: {
                 <span className="font-semibold">{product.productName}</span>
               </div>
               <span>
-                {product.qty} x {product.salesRate} ={" "}
-                {Math.round(Number(product.salesRate) * Number(product.qty))}
+                {product.qty} x
+                {(
+                  parseFloat(product.salesRate) *
+                  (1 + parseFloat(product.GST) / 100)
+                ).toFixed(2)}
+                ={" "}
+                {Math.round(
+                  Number(
+                    parseFloat(product.salesRate) *
+                      (1 + parseFloat(product.GST) / 100)
+                  ) * Number(product.qty)
+                )}
               </span>
             </>
             <hr />
@@ -43,7 +53,15 @@ export function ReviewOrderComponent(props: {
         <span>
           {props.productCart.reduce(
             (acc: any, product: any) =>
-              Math.round(acc + product.salesRate * product.qty),
+              Math.round(
+                acc +
+                  Math.round(
+                    Number(
+                      parseFloat(product.salesRate) *
+                        (1 + parseFloat(product.GST) / 100)
+                    ) * Number(product.qty)
+                  )
+              ),
             0
           )}
         </span>
