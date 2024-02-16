@@ -71,8 +71,6 @@ function CustomerTableComponent(props: {
   }
 
   function onTextChange(event: React.ChangeEvent<HTMLInputElement>) {
-    console.log(event.target.value, event.target.name);
-
     let name = event.target.name;
     let value = event.target.value;
 

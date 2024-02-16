@@ -12,6 +12,7 @@ export interface ProductDetails {
   reOrderLevel?: string;
   _id?: string;
   qty?: number;
+  distRate?: string;
 }
 export interface CustomerDetails {
   customerName: string;

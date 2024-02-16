@@ -40,7 +40,6 @@ export const sendOrderEmailAPI = async (orderId: string, authToken: string) => {
   const res = await httpClient
     .get(CONFIG.SEND_ORDER_EMAIL + "/" + orderId)
     .then((response) => {
-      console.log(response);
       const blob = new Blob([response.data], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
       window.open(url, "_blank");

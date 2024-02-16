@@ -26,6 +26,7 @@ function ProductTableComponent(props: {
     SGST: "",
     IGST: "",
     unit: "",
+    distRate: "",
   };
 
   const initialFormError = {
@@ -40,6 +41,7 @@ function ProductTableComponent(props: {
     IGST: "",
     unit: "",
     qty: "",
+    distRate: "",
   };
 
   const _productState = useAppSelector(productState);
@@ -80,6 +82,34 @@ function ProductTableComponent(props: {
           [key]: event.value[key],
         }));
       });
+      calculatePrice(false, event.value);
+    }
+  }
+
+  function onTextChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.target;
+    if (name == "distRate") {
+      calculatePrice(true, parseFloat(value));
+    }
+    setSelectedProduct((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  }
+
+  function calculatePrice(isDist: boolean, distRate: any) {
+    if (isDist) {
+      const _salesRate = distRate / (1 + parseInt(selectedProduct.GST) / 100);
+      setSelectedProduct((prevState) => ({
+        ...prevState,
+        salesRate: _salesRate.toFixed(2),
+      }));
+    } else {
+      const _distRate = distRate.salesRate * (1 + parseInt(distRate.GST) / 100);
+      setSelectedProduct((prevState) => ({
+        ...prevState,
+        distRate: _distRate.toFixed(2),
+      }));
     }
   }
 
@@ -148,6 +178,14 @@ function ProductTableComponent(props: {
       setFormErrors(initialFormError);
       return { validity: false, error: "Quantity is required", name: "qty" };
     }
+    if (props.isOrder && !selectedProduct.distRate) {
+      setFormErrors(initialFormError);
+      return {
+        validity: false,
+        error: "Distributor Rate is required",
+        name: "distRate",
+      };
+    }
     return { validity: true, name: "" };
   }
 
@@ -165,14 +203,6 @@ function ProductTableComponent(props: {
     }
   }
 
-  function onTextChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = event.target;
-
-    setSelectedProduct((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  }
   return (
     <form>
       <div className="form-group">
@@ -204,26 +234,11 @@ function ProductTableComponent(props: {
         <InputText
           placeholder="Product Name"
           name="productName"
+          disabled={props.isOrder}
           value={selectedProduct.productName}
           className={formErrors.productName ? "p-invalid" : ""}
           onChange={onTextChange}
         ></InputText>
-
-        {/* {(props.method === "edit" || props.method === "delete") && (
-          <AutoComplete
-            field="productName"
-            placeholder="Product Name"
-            className="form-input"
-            name="productName"
-            value={selectedProduct}
-            suggestions={filteredProducts}
-            onKeyDown={(e) => {
-              e.code === "Backspace" && setSelectedProduct(initialFormState);
-            }}
-            completeMethod={search}
-            onChange={(e) => onProductSelect(e)}
-          />
-        )} */}
 
         {props.isOrder && (
           <InputText
@@ -238,6 +253,7 @@ function ProductTableComponent(props: {
       <div className="form-group">
         <InputText
           placeholder="HSN Code"
+          disabled={props.isOrder}
           onChange={onTextChange}
           className={formErrors.HSN_Code ? "p-invalid" : ""}
           name="HSN_Code"
@@ -247,6 +263,7 @@ function ProductTableComponent(props: {
           placeholder="Unit"
           onChange={onTextChange}
           className={formErrors.unit ? "p-invalid" : ""}
+          disabled={props.isOrder}
           name="unit"
           value={selectedProduct.unit}
         ></InputText>
@@ -255,6 +272,7 @@ function ProductTableComponent(props: {
         <InputText
           placeholder="Purchase Rate"
           onChange={onTextChange}
+          disabled={props.isOrder}
           className={formErrors.purchaseRate ? "p-invalid" : ""}
           name="purchaseRate"
           value={selectedProduct.purchaseRate}
@@ -262,6 +280,7 @@ function ProductTableComponent(props: {
         <InputText
           placeholder="Sales Rate"
           onChange={onTextChange}
+          disabled={props.isOrder}
           className={formErrors.salesRate ? "p-invalid" : ""}
           name="salesRate"
           value={selectedProduct.salesRate}
@@ -271,6 +290,7 @@ function ProductTableComponent(props: {
         <InputText
           placeholder="GST"
           onChange={onTextChange}
+          disabled={props.isOrder}
           name="GST"
           className={formErrors.GST ? "p-invalid" : ""}
           value={selectedProduct.GST}
@@ -279,6 +299,7 @@ function ProductTableComponent(props: {
           placeholder="IGST"
           onChange={onTextChange}
           name="IGST"
+          disabled={props.isOrder}
           className={formErrors.IGST ? "p-invalid" : ""}
           value={selectedProduct.IGST}
         ></InputText>
@@ -287,6 +308,7 @@ function ProductTableComponent(props: {
         <InputText
           placeholder="SGST"
           className={formErrors.SGST ? "p-invalid" : ""}
+          disabled={props.isOrder}
           onChange={onTextChange}
           name="SGST"
           value={selectedProduct.SGST}
@@ -295,8 +317,16 @@ function ProductTableComponent(props: {
           placeholder="CGST"
           onChange={onTextChange}
           className={formErrors.CGST ? "p-invalid" : ""}
+          disabled={props.isOrder}
           name="CGST"
           value={selectedProduct.CGST}
+        ></InputText>
+        <InputText
+          placeholder="Distributor Rate"
+          onChange={onTextChange}
+          className={formErrors.distRate ? "p-invalid" : ""}
+          name="distRate"
+          value={selectedProduct.distRate}
         ></InputText>
       </div>
       <div className="flex justify-content-center">

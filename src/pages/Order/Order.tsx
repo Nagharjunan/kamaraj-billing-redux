@@ -96,7 +96,6 @@ function OrderComponent(props: { method: string }) {
     console.log(isDuplicateProduct, selectedProduct);
     if (isDuplicateProduct?.length) {
       toast.info("Product Already Exists, try deleting and add the product");
-      console.log(productCart);
     } else {
       // update productCart state with selectedProduct
       setProductCart([...(productCart ?? []), selectedProduct]);
@@ -111,7 +110,6 @@ function OrderComponent(props: { method: string }) {
       }
     );
     productCart?.splice(indexToDelete || 0, 1);
-    console.log(selectedProductCode, indexToDelete);
     setProductCart([...(productCart ?? [])]);
   }
 
