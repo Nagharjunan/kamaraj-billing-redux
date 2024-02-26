@@ -27,6 +27,9 @@ function HomeComponent() {
       </Link>
       {_authState.value.role === "admin" ? (
         <>
+          <Link to="/approve-order" className="p-2">
+            Approve Order
+          </Link>
           <Link to="/view-invoice" className="p-2">
             View Invoice
           </Link>

@@ -57,4 +57,5 @@ export interface OrderDetails {
     approvalDate: String;
   };
   _id?: string;
+  orderId?: string;
 }

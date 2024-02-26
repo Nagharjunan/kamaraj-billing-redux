@@ -13,13 +13,15 @@ export const CONFIG = {
   GET_ORDERS: "/getorders",
   CREATE_ORDER: "/createorder",
   SEND_ORDER_EMAIL: "/sendorderpdf",
+  GET_PENDING_ORDERS: "/getpendingorders",
+  SET_ORDER_APPROVAL: "/setorderapproval",
 };
 
 const localURL = "http://localhost:8080";
 const prodURL = "https://kamaraj-node-service.onrender.com";
 
 export const httpClient = axios.create({
-  baseURL: prodURL,
+  baseURL: localURL,
 });
 
 export const setAuthHeader = (authToken: string) => {

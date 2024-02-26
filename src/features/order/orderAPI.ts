@@ -19,6 +19,32 @@ export const getOrdersAPI = async (authToken: string) => {
   return res;
 };
 
+export const getPendingOrdersAPI = async (authToken: string) => {
+  setAuthHeader(authToken);
+  const res = await httpClient
+    .get(CONFIG.GET_PENDING_ORDERS)
+    .then((response) => {
+      return formResponseObject(response);
+    })
+    .catch((err) => {
+      return formResponseObject(err);
+    });
+  return res;
+};
+
+export const approveOrderAPI = async (orderId: string, authToken: string) => {
+  setAuthHeader(authToken);
+  const res = await httpClient
+    .get(CONFIG.SET_ORDER_APPROVAL + "/" + orderId)
+    .then((response) => {
+      return formResponseObject(response);
+    })
+    .catch((err) => {
+      return formResponseObject(err);
+    });
+  return res;
+};
+
 export const createOrderAPI = async (
   orderDetails: OrderDetails,
   authToken: string

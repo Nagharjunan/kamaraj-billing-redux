@@ -1,0 +1,2 @@
+add navigation to /home when API failed
+split orderslice into allOrders, pendingOrders, paidOrders(if needed in future)

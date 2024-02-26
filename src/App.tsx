@@ -12,6 +12,7 @@ import { loaderState } from "./features/Loader/loaderSlice";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { InvoiceComponent } from "./pages/Invoice/Invoice";
+import ApproveOrderComponent from "./pages/ApproveOrder/approve-order.component";
 
 function App() {
   const _loaderState = useAppSelector(loaderState);
@@ -41,6 +42,10 @@ function App() {
             <Route
               path="/home"
               element={<HomeComponent></HomeComponent>}
+            ></Route>
+            <Route
+              path="/approve-order"
+              element={<ApproveOrderComponent></ApproveOrderComponent>}
             ></Route>
             <Route
               path="/create-order"
