@@ -46,7 +46,7 @@ function ApproveOrderComponent() {
     const approveOrder = await approveOrderAPI(
       orderId,
       _authState.value.accessToken,
-      _authState.value.username
+      _authState.value.email
     );
     if (isSuccess(approveOrder)) {
       toast.success("Order Approved");
