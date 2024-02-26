@@ -21,7 +21,7 @@ const localURL = "http://localhost:8080";
 const prodURL = "https://kamaraj-node-service.onrender.com";
 
 export const httpClient = axios.create({
-  baseURL: localURL,
+  baseURL: prodURL,
 });
 
 export const setAuthHeader = (authToken: string) => {
