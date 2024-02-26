@@ -81,6 +81,24 @@ function ApproveOrderComponent() {
                 {new Date(order.orderDate).toLocaleDateString("en-GB")}
               </span>
             </div>
+            <div className="flex justify-content-between">
+              <span>Order Amount</span>
+              <span>
+                {order.orderList.reduce(
+                  (acc: any, product: any) =>
+                    Math.round(
+                      acc +
+                        Math.round(
+                          Number(
+                            parseFloat(product.salesRate) *
+                              (1 + parseFloat(product.GST) / 100)
+                          ) * Number(product.qty)
+                        )
+                    ),
+                  0
+                )}
+              </span>
+            </div>
           </>
           <div className="flex justify-content-end pt-2">
             <Button
