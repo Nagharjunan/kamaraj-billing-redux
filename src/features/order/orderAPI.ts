@@ -32,10 +32,18 @@ export const getPendingOrdersAPI = async (authToken: string) => {
   return res;
 };
 
-export const approveOrderAPI = async (orderId: string, authToken: string) => {
+export const approveOrderAPI = async (
+  orderId: string,
+  authToken: string,
+  approvedBy: string
+) => {
   setAuthHeader(authToken);
+  const approved = {
+    orderId,
+    approvedBy,
+  };
   const res = await httpClient
-    .get(CONFIG.SET_ORDER_APPROVAL + "/" + orderId)
+    .post(CONFIG.SET_ORDER_APPROVAL, approved)
     .then((response) => {
       return formResponseObject(response);
     })
