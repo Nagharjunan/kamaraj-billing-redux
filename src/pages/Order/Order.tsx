@@ -154,6 +154,11 @@ function OrderComponent(props: { method: string }) {
         approvedBy: "",
         approvalDate: "",
       },
+      paymentDetails: {
+        paymentMethod: paymentMode,
+        paymentDate: "",
+        isPaymentDone: false,
+      },
     };
     console.log(order);
     dispatch(setLoading());

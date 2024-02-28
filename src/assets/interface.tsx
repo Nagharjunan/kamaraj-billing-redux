@@ -51,6 +51,11 @@ export interface OrderDetails {
     modifiedDate: String;
     modifiedUser: String;
   };
+  paymentDetails: {
+    paymentMethod: String;
+    paymentDate: String;
+    isPaymentDone: Boolean;
+  };
   approved: {
     isApproved: Boolean;
     approvedBy: String;
