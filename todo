@@ -1,2 +1,6 @@
+Implement Edit Order,
+Implement Delete Order
+Add Payment section in Create Order
+Implement My Orders
 add navigation to /home when API failed
 split orderslice into allOrders, pendingOrders, paidOrders(if needed in future)
