@@ -54,7 +54,7 @@ export function InvoiceComponent() {
   };
 
   return (
-    <div>
+    <div className="p-2">
       <h3>Invoice</h3>
       {/* take _orderState.values and map it, display the orderDate, orderedFor.customerName and a view link */}
       {_orderState.value.map((order) => {
