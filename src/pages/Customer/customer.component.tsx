@@ -16,34 +16,23 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { isSuccess } from "../../assets/config";
 import { resetStore } from "../../app/resetAction";
+import { GlobalService } from "../../features/global.service";
 
 function CustomerComponent(props: { method: string }) {
   const _userState = useAppSelector(userData);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const fetchCustomerData = GlobalService().fetchCustomerData;
 
   useEffect(() => {
     if (_userState.value.isLoggedIn) {
-      fetchData();
+      fetchCustomerData();
     } else {
       dispatch(resetStore());
       navigate("/");
     }
   }, []);
-
-  async function fetchData() {
-    dispatch(setLoading());
-    const customerList = await getAllCustomerAPI(_userState.value.accessToken);
-    if (isSuccess(customerList)) {
-      toast.success("Customer List Fetch Successfully");
-      dispatch(getAllCustomer(customerList.value));
-      dispatch(closeLoading());
-    } else {
-      toast.error("Customer List Fetch Failed");
-      dispatch(closeLoading());
-    }
-  }
 
   function submitCustomer(selectedCustomer: CustomerDetails) {
     if (props.method === "create") {
@@ -65,7 +54,7 @@ function CustomerComponent(props: { method: string }) {
     );
     if (isSuccess(customer)) {
       toast.success(customer.message);
-      fetchData();
+      fetchCustomerData();
     } else {
       toast.error(customer.message);
       dispatch(closeLoading());
@@ -80,7 +69,7 @@ function CustomerComponent(props: { method: string }) {
     );
     if (isSuccess(customer)) {
       toast.success(customer.message);
-      fetchData();
+      fetchCustomerData();
     } else {
       toast.error(customer.message);
       dispatch(closeLoading());
@@ -94,7 +83,7 @@ function CustomerComponent(props: { method: string }) {
     );
     if (isSuccess(customer)) {
       toast.success(customer.message);
-      fetchData();
+      fetchCustomerData();
     } else {
       toast.error(customer.message);
       dispatch(closeLoading());

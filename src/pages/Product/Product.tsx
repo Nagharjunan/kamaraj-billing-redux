@@ -17,34 +17,23 @@ import {
 import { isSuccess } from "../../assets/config";
 import { toast } from "react-toastify";
 import { resetStore } from "../../app/resetAction";
+import { GlobalService } from "../../features/global.service";
 
 function ProductComponent(props: { method: string }) {
   const _authState = useAppSelector(userData);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const fetchProductData = GlobalService().fetchProductData;
 
   useEffect(() => {
     if (_authState.value.isLoggedIn) {
-      fetchData();
+      fetchProductData();
     } else {
       dispatch(resetStore());
       navigate("/");
     }
   }, []);
-
-  async function fetchData() {
-    dispatch(setLoading());
-    const productList = await getAllProductAPI(_authState.value.accessToken);
-    if (isSuccess(productList)) {
-      toast.success("Product List Fetch Successfully");
-      dispatch(getAllProducts(productList.value));
-      dispatch(closeLoading());
-    } else {
-      toast.error("Product List Fetch Failed");
-      dispatch(closeLoading());
-    }
-  }
 
   function submitProduct(selectedProduct: ProductDetails, isOrder: Boolean) {
     if (!isOrder) {
@@ -67,7 +56,7 @@ function ProductComponent(props: { method: string }) {
     );
     if (isSuccess(product)) {
       toast.success(product.message);
-      fetchData();
+      fetchProductData();
     } else {
       toast.error(product.message);
       dispatch(closeLoading());
@@ -83,7 +72,7 @@ function ProductComponent(props: { method: string }) {
     );
     if (isSuccess(product)) {
       toast.success(product.message);
-      fetchData();
+      fetchProductData();
     } else {
       toast.error(product.message);
       dispatch(closeLoading());
@@ -97,7 +86,7 @@ function ProductComponent(props: { method: string }) {
     );
     if (isSuccess(product)) {
       toast.success(product.message);
-      fetchData();
+      fetchProductData();
     } else {
       toast.error(product.message);
       dispatch(closeLoading());

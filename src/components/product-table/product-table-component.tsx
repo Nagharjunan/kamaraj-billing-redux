@@ -5,10 +5,11 @@ import {
 } from "primereact/autocomplete";
 import { InputText } from "primereact/inputtext";
 import { ProductDetails } from "../../assets/interface";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { productState } from "../../features/product/productSlice";
 import { Button } from "primereact/button";
+import { GlobalService } from "../../features/global.service";
 
 function ProductTableComponent(props: {
   method: string;
@@ -45,12 +46,19 @@ function ProductTableComponent(props: {
   };
 
   const _productState = useAppSelector(productState);
+  const fetchProductData = GlobalService().fetchProductData;
 
   const [selectedProduct, setSelectedProduct] =
     useState<ProductDetails>(initialFormState);
   const [formErrors, setFormErrors] = useState(initialFormError);
 
   const [filteredProducts, setFilteredProducts] = useState<ProductDetails[]>();
+
+  useEffect(() => {
+    if (!_productState.value.length) {
+      fetchProductData();
+    }
+  });
 
   const search = (event: AutoCompleteCompleteEvent) => {
     setTimeout(() => {

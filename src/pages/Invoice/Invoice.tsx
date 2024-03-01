@@ -10,12 +10,14 @@ import { closeLoading, setLoading } from "../../features/Loader/loaderSlice";
 import { ReviewOrderComponent } from "../../components/review-order/review-order-component";
 import { Button } from "primereact/button";
 import { OrderDetails } from "../../assets/interface";
+import { GlobalService } from "../../features/global.service";
 
 export function InvoiceComponent() {
   const dispatch = useAppDispatch();
   const _orderState = useAppSelector(OrderState);
   const _authState = useAppSelector(userData);
   const navigate = useNavigate();
+  const fetchOrders = GlobalService().fetchOrders;
 
   useEffect(() => {
     if (_authState.value.isLoggedIn) {
@@ -24,19 +26,6 @@ export function InvoiceComponent() {
       navigate("/");
     }
   }, []);
-
-  const fetchOrders = async () => {
-    dispatch(setLoading());
-    const orderList = await getOrdersAPI(_authState.value.accessToken);
-    if (isSuccess(orderList)) {
-      toast.success("Order List Fetch Successfully");
-      dispatch(getAllOrder(orderList.value));
-      dispatch(closeLoading());
-    } else {
-      toast.error("Order List Fetch Failed");
-      dispatch(closeLoading());
-    }
-  };
 
   const sendOrderPDF = async (order: OrderDetails) => {
     dispatch(setLoading());

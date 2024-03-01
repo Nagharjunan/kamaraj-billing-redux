@@ -31,12 +31,14 @@ import { ReviewOrderComponent } from "../../components/review-order/review-order
 import { Dropdown } from "primereact/dropdown";
 import { createOrderAPI } from "../../features/order/orderAPI";
 import { resetStore } from "../../app/resetAction";
+import { GlobalService } from "../../features/global.service";
 
 function OrderComponent(props: { method: string }) {
   const [productCart, setProductCart] = useState<ProductDetails[]>();
   const [selectedCustomer, setSelectedCustomer] = useState<CustomerDetails>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const globalService = GlobalService();
 
   const _customerState = useAppSelector(customerState);
   const _productState = useAppSelector(productState);
@@ -51,30 +53,17 @@ function OrderComponent(props: { method: string }) {
 
   useEffect(() => {
     if (_userState.value.id) {
-      if (!_customerState.value.length || !_productState.value.length) {
-        fetchData();
+      if (!_customerState.value.length) {
+        globalService.fetchCustomerData();
+      }
+      if (!_productState.value.length) {
+        globalService.fetchProductData();
       }
     } else {
       dispatch(resetStore());
       navigate("/");
     }
   }, []);
-
-  async function fetchData() {
-    dispatch(setLoading());
-    const customerList = await getAllCustomerAPI(_userState.value.accessToken);
-    const productList = await getAllProductAPI(_userState.value.accessToken);
-
-    if (isSuccess(customerList) && isSuccess(productList)) {
-      toast.success("Customer List Fetch Successfully");
-      dispatch(getAllCustomer(customerList.value));
-      dispatch(getAllProducts(productList.value));
-      dispatch(closeLoading());
-    } else {
-      toast.error(productList.message ?? customerList.message);
-      dispatch(closeLoading());
-    }
-  }
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const items: MenuItem[] = [
