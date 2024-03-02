@@ -15,12 +15,28 @@ import { getAllCustomerAPI } from "./Customer/customerAPI";
 import { getAllCustomer } from "./Customer/customerSlice";
 import { getAllProductAPI } from "./product/productAPI";
 import { getAllProducts } from "./product/productSlice";
+import { ProductDetails } from "../assets/interface";
 
 export function GlobalService() {
   const dispatch = useAppDispatch();
   const _orderState = useAppSelector(OrderState);
   const _authState = useAppSelector(userData);
   const navigate = useNavigate();
+
+  const sortOrderList = async (orderList: ProductDetails[]) => {
+    orderList.sort((a, b) => {
+      // Compare the 'code' properties of two objects
+      if (a.productCode < b.productCode) {
+        return -1; // a should come before b
+      }
+      if (a.productCode > b.productCode) {
+        return 1; // b should come before a
+      }
+      return 0; // both are equal
+    });
+
+    return orderList;
+  };
 
   const fetchOrders = async () => {
     dispatch(setLoading());
@@ -32,6 +48,7 @@ export function GlobalService() {
     } else {
       toast.error("Order List Fetch Failed");
       dispatch(closeLoading());
+      navigate("/home");
     }
   };
 
@@ -76,6 +93,7 @@ export function GlobalService() {
     } else {
       toast.error("Customer List Fetch Failed");
       dispatch(closeLoading());
+      navigate("/home");
     }
   }
 
@@ -89,6 +107,7 @@ export function GlobalService() {
     } else {
       toast.error("Product List Fetch Failed");
       dispatch(closeLoading());
+      navigate("/home");
     }
   }
 
@@ -98,5 +117,6 @@ export function GlobalService() {
     fetchCustomerData,
     fetchOrders,
     fetchProductData,
+    sortOrderList,
   };
 }

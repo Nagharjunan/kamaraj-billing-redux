@@ -25,6 +25,9 @@ function HomeComponent() {
       <Link to="/create-order" className="p-2">
         Create Order
       </Link>
+      <Link to="/my-orders" className="p-2">
+        My Orders
+      </Link>
       {_authState.value.role === "admin" ? (
         <>
           <Link to="/approve-order" className="p-2">
@@ -32,12 +35,6 @@ function HomeComponent() {
           </Link>
           <Link to="/view-invoice" className="p-2">
             View Invoice
-          </Link>
-          <Link to="/create-product" className="p-2">
-            Create Product
-          </Link>
-          <Link to="/edit-product" className="p-2">
-            Edit Product
           </Link>
         </>
       ) : (

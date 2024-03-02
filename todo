@@ -1,6 +1,11 @@
-Implement Edit Order,
-Implement Delete Order
-Add Payment section in Create Order
-Implement My Orders
-add navigation to /home when API failed
-split orderslice into allOrders, pendingOrders, paidOrders(if needed in future)
+1. Implement Edit Order (done - 29/02/2024 - 02/03/2024)
+2. Implement Delete Order (done - 29/02/2024 - 02/03/2024)
+3. add navigation to /home when API failed (done - 29/02/2024 - 02/03/2024)
+4. Implement My Orders (done - 29/02/2024 - 02/03/2024)
+5. Add Payment section in Create Order
+6. split orderslice into allOrders, pendingOrders, paidOrders(if needed in future)
+
+Important Tasks:
+
+1. Need to enable update API in my-order.component.tsx (done - 02/03/2024)
+2. Need to enable delete button in order-list.component.tsx and write delete API in my-order.component.tsx (done - 02/03/2024)

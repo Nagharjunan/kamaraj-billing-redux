@@ -12,7 +12,7 @@ import { loaderState } from "./features/Loader/loaderSlice";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { InvoiceComponent } from "./pages/Invoice/Invoice";
-import ApproveOrderComponent from "./pages/ApproveOrder/approve-order.component";
+import OrderHelperComponent from "./pages/OrderHelper/order-helper.component";
 
 function App() {
   const _loaderState = useAppSelector(loaderState);
@@ -26,7 +26,7 @@ function App() {
         <Navbar></Navbar>
         <ToastContainer
           position="top-right"
-          autoClose={1000}
+          autoClose={2000}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick
@@ -45,7 +45,9 @@ function App() {
             ></Route>
             <Route
               path="/approve-order"
-              element={<ApproveOrderComponent></ApproveOrderComponent>}
+              element={
+                <OrderHelperComponent type="Pending Orders"></OrderHelperComponent>
+              }
             ></Route>
             <Route
               path="/create-order"
@@ -54,6 +56,12 @@ function App() {
             <Route
               path="/view-invoice"
               element={<InvoiceComponent></InvoiceComponent>}
+            ></Route>
+            <Route
+              path="/my-orders"
+              element={
+                <OrderHelperComponent type="My Orders"></OrderHelperComponent>
+              }
             ></Route>
             <Route
               path="/edit-order"

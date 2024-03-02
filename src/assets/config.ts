@@ -15,6 +15,9 @@ export const CONFIG = {
   SEND_ORDER_EMAIL: "/sendorderpdf",
   GET_PENDING_ORDERS: "/getpendingorders",
   SET_ORDER_APPROVAL: "/setorderapproval",
+  GET_MY_ORDERS: "/getmyorders",
+  UPDATE_ORDER: "/updateorder",
+  DELETE_ORDER: "/deleteorder",
 };
 
 const localURL = "http://localhost:8080";

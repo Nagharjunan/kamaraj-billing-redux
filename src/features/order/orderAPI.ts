@@ -19,6 +19,19 @@ export const getOrdersAPI = async (authToken: string) => {
   return res;
 };
 
+export const getMyOrdersAPI = async (authToken: string, userID: string) => {
+  setAuthHeader(authToken);
+  const res = await httpClient
+    .get(CONFIG.GET_MY_ORDERS + "/" + userID)
+    .then((response) => {
+      return formResponseObject(response);
+    })
+    .catch((err) => {
+      return formResponseObject(err);
+    });
+  return res;
+};
+
 export const getPendingOrdersAPI = async (authToken: string) => {
   setAuthHeader(authToken);
   const res = await httpClient
@@ -60,6 +73,35 @@ export const createOrderAPI = async (
   setAuthHeader(authToken);
   const res = await httpClient
     .post(CONFIG.CREATE_ORDER, orderDetails)
+    .then((response) => {
+      return formResponseObject(response);
+    })
+    .catch((err) => {
+      return formResponseObject(err);
+    });
+  return res;
+};
+
+export const updateOrderAPI = async (
+  orderDetails: OrderDetails,
+  authToken: string
+) => {
+  setAuthHeader(authToken);
+  const res = await httpClient
+    .post(CONFIG.UPDATE_ORDER, orderDetails)
+    .then((response) => {
+      return formResponseObject(response);
+    })
+    .catch((err) => {
+      return formResponseObject(err);
+    });
+  return res;
+};
+
+export const deleteOrderAPI = async (orderId: string, authToken: string) => {
+  setAuthHeader(authToken);
+  const res = await httpClient
+    .get(CONFIG.DELETE_ORDER + `/${orderId}`)
     .then((response) => {
       return formResponseObject(response);
     })
