@@ -6,10 +6,13 @@ import {
 import { InputText } from "primereact/inputtext";
 import { ProductDetails } from "../../assets/interface";
 import { useEffect, useState } from "react";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { productState } from "../../features/product/productSlice";
 import { Button } from "primereact/button";
 import { GlobalService } from "../../features/global.service";
+import { userData } from "../../features/Auth/AuthSlice";
+import { resetStore } from "../../app/resetAction";
+import { useNavigate } from "react-router-dom";
 
 function ProductTableComponent(props: {
   method: string;
@@ -46,6 +49,10 @@ function ProductTableComponent(props: {
   };
 
   const _productState = useAppSelector(productState);
+  const _authState = useAppSelector(userData);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const fetchProductData = GlobalService().fetchProductData;
 
   const [selectedProduct, setSelectedProduct] =
@@ -55,10 +62,13 @@ function ProductTableComponent(props: {
   const [filteredProducts, setFilteredProducts] = useState<ProductDetails[]>();
 
   useEffect(() => {
-    if (!_productState.value.length) {
+    if (_authState.value.isLoggedIn) {
       fetchProductData();
+    } else {
+      dispatch(resetStore());
+      navigate("/");
     }
-  });
+  }, []);
 
   const search = (event: AutoCompleteCompleteEvent) => {
     setTimeout(() => {

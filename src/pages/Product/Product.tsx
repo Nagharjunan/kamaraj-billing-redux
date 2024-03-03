@@ -2,38 +2,23 @@ import { Card } from "primereact/card";
 import "./Product.css";
 import ProductTableComponent from "../../components/product-table/product-table-component";
 import { ProductDetails } from "../../assets/interface";
-import { useEffect } from "react";
 import { userData } from "../../features/Auth/AuthSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { useNavigate } from "react-router-dom";
-import { getAllProducts } from "../../features/product/productSlice";
 import { closeLoading, setLoading } from "../../features/Loader/loaderSlice";
 import {
   createProductAPI,
   deleteProductAPI,
-  getAllProductAPI,
   updateProductAPI,
 } from "../../features/product/productAPI";
 import { isSuccess } from "../../assets/config";
 import { toast } from "react-toastify";
-import { resetStore } from "../../app/resetAction";
 import { GlobalService } from "../../features/global.service";
 
 function ProductComponent(props: { method: string }) {
   const _authState = useAppSelector(userData);
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const fetchProductData = GlobalService().fetchProductData;
-
-  useEffect(() => {
-    if (_authState.value.isLoggedIn) {
-      fetchProductData();
-    } else {
-      dispatch(resetStore());
-      navigate("/");
-    }
-  }, []);
 
   function submitProduct(selectedProduct: ProductDetails, isOrder: Boolean) {
     if (!isOrder) {
