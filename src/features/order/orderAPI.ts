@@ -45,6 +45,27 @@ export const getPendingOrdersAPI = async (authToken: string) => {
   return res;
 };
 
+export const orderPaidAPI = async (
+  orderId: string,
+  authToken: string,
+  paymentMode: string
+) => {
+  setAuthHeader(authToken);
+  const paymentObj = {
+    orderId,
+    paymentMode,
+  };
+  const res = await httpClient
+    .post(CONFIG.SET_PAYMENT, paymentObj)
+    .then((response) => {
+      return formResponseObject(response);
+    })
+    .catch((err) => {
+      return formResponseObject(err);
+    });
+  return res;
+};
+
 export const approveOrderAPI = async (
   orderId: string,
   authToken: string,

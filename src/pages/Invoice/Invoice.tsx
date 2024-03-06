@@ -1,7 +1,7 @@
 import { MouseEventHandler, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { OrderState, getAllOrder } from "../../features/order/orderSlice";
-import { getOrdersAPI, sendOrderEmailAPI } from "../../features/order/orderAPI";
+import { orderPaidAPI, sendOrderEmailAPI } from "../../features/order/orderAPI";
 import { userData } from "../../features/Auth/AuthSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -42,6 +42,23 @@ export function InvoiceComponent() {
     }
   };
 
+  const orderPaid = async (order: OrderDetails) => {
+    dispatch(setLoading());
+    const orderPaid = await orderPaidAPI(
+      order._id || "",
+      _authState.value.accessToken,
+      order.paymentMode
+    );
+    if (isSuccess(orderPaid)) {
+      toast.success("Order Paid");
+      fetchOrders();
+      dispatch(closeLoading());
+    } else {
+      toast.error("Failed, try again later");
+      dispatch(closeLoading());
+    }
+  };
+
   return (
     <div className="p-2">
       <h3>Invoice</h3>
@@ -49,11 +66,33 @@ export function InvoiceComponent() {
       {_orderState.value.map((order) => {
         return (
           <div key={order._id}>
-            <p>{new Date(order.orderDate).toLocaleDateString()}</p>
+            <p>
+              {new Date(order.orderDate).toLocaleDateString()} {" - "}{" "}
+              {order.orderId}
+            </p>
             <p>{order.orderedFor.customerName}</p>
-            <Button severity="info" onClick={() => sendOrderPDF(order)}>
-              View Order
-            </Button>
+            <p>Order Status : {order.orderStatus}</p>
+            <p>Payment Mode : {order.paymentMode.toUpperCase()}</p>
+            <p>
+              Payment Status :{" "}
+              {order.paymentDetails.isPaymentDone ? "Paid" : "Not Paid"}
+            </p>
+            <div className="flex justify-content-end">
+              <Button severity="info" onClick={() => sendOrderPDF(order)}>
+                View Order
+              </Button>
+              {_authState.value.role === "admin" &&
+                order.approved.isApproved &&
+                !order.paymentDetails.isPaymentDone && (
+                  <Button
+                    label="Paid"
+                    onClick={() => {
+                      orderPaid(order);
+                    }}
+                    className="p-button-success ml-2"
+                  />
+                )}
+            </div>
           </div>
         );
       })}

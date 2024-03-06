@@ -18,6 +18,7 @@ export const CONFIG = {
   GET_MY_ORDERS: "/getmyorders",
   UPDATE_ORDER: "/updateorder",
   DELETE_ORDER: "/deleteorder",
+  SET_PAYMENT: "/orderpayment",
 };
 
 const localURL = "http://localhost:8080";

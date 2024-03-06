@@ -189,7 +189,7 @@ function OrderHelperComponent(props: { type: string }) {
     if (isSuccess(approveOrder)) {
       toast.success("Order Approved");
       dispatch(closeLoading());
-      fetchPendingOrders();
+      fetchData();
     } else {
       toast.error("Approval Failed, try again later");
       dispatch(closeLoading());
