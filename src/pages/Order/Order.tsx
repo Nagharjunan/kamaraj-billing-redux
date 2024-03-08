@@ -127,6 +127,9 @@ function OrderComponent(props: { method: string }) {
   }
 
   async function createNewOrder() {
+    const sortedOrderCart = await globalService.sortOrderList(
+      productCart || []
+    );
     const order: OrderDetails = {
       orderDate: new Date().toString(),
       orderedBy: _userState.value.id,
@@ -135,7 +138,7 @@ function OrderComponent(props: { method: string }) {
         modifiedUser: "",
       },
       orderedFor: selectedCustomer ?? ({} as CustomerDetails),
-      orderList: productCart ?? [],
+      orderList: sortedOrderCart,
       paymentMode: paymentMode,
       orderStatus: "pending",
       approved: {
