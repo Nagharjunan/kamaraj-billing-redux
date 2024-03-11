@@ -30,7 +30,7 @@ export function InvoiceComponent() {
   const sendOrderPDF = async (order: OrderDetails) => {
     dispatch(setLoading());
     const orderPDF = await sendOrderEmailAPI(
-      order._id ?? "",
+      order,
       _authState.value.accessToken
     );
     if (isSuccess(orderPDF)) {

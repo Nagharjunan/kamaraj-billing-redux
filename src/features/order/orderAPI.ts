@@ -132,14 +132,26 @@ export const deleteOrderAPI = async (orderId: string, authToken: string) => {
   return res;
 };
 
-export const sendOrderEmailAPI = async (orderId: string, authToken: string) => {
+export const sendOrderEmailAPI = async (
+  order: OrderDetails,
+  authToken: string
+) => {
   setAuthHeader(authToken);
   const res = await httpClient
-    .get(CONFIG.SEND_ORDER_EMAIL + "/" + orderId)
+    .get(CONFIG.SEND_ORDER_EMAIL + "/" + order._id)
     .then((response) => {
       const blob = new Blob([response.data], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
-      window.open(url, "_blank");
+      var anchor = document.createElement("a");
+      anchor.download =
+        order.orderId +
+        " " +
+        order.orderedFor.customerName +
+        " BILL NO " +
+        order.orderId;
+      anchor.href = url;
+      anchor.click();
+      // window.open(url, "_blank");
       return { status: 200 };
     })
     .catch((err) => {
